@@ -1,0 +1,151 @@
+
+
+.layerList {
+    overflow-y: auto; /* Dikeyde scrollbar ekleyin */
+    max-height: 57vh;
+    margin: 5px;
+}
+
+.layerList div {
+    font-size: 1.6rem;
+    background-color: rgba(129, 135, 143, 0.363);
+    border-radius: 10px;
+    margin: 5px;
+    display: flex;
+    justify-content: space-between; /* label sola, butonlar sağa yerleşsin */
+    align-items: center;
+    padding: 10px; /* İçeriği biraz daha rahat gösterir */
+}
+
+
+.label {
+    color: rgb(230, 230, 230);
+    margin-left: 10px;
+}
+
+.layerList .buttonContainer {
+    display: flex;
+    justify-content: flex-end; /* Butonları sağa hizalar */
+    background-color: transparent;
+    border: none;
+}
+
+.seeButton, .hideButton {
+    font-size: 1.2rem;
+    margin: 5px;
+
+    padding: 10px 20px; /* Butonları daha büyük ve rahat tıklanabilir yapar */
+    cursor: pointer;
+    border: 3px solid black;
+    transition: background-color 0.3s, transform 0.2s ease; /* Geçiş efekti */
+    border-radius: 5px;
+}
+
+.seeButton {
+    background-color: rgb(52, 128, 131);
+    color: white;
+    width: 3vw; /* Renk seçiciyi esnek yapıyoruz */
+    height: 2vw;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 3rem;
+    min-height: 2rem;
+    box-shadow: 0 0 .5vw rgba(0,0,0,0.5), 0 0 0 .15vw transparent;
+}
+
+
+
+/* Buton üzerine gelince renk değişimi ve hafif büyüme efekti */
+.seeButton:hover{
+    background-color: rgba(32, 183, 189, 0.8); /* Buton renk değişimi */
+    transform: scale(1.05); /* Buton büyür */
+}
+
+
+.seeButton:active, .hideButton:active {
+    transform: scale(0.95); /* Butona tıklanma efekti */
+}
+
+.colorPicker{
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 2.5vw; /* Renk seçiciyi esnek yapıyoruz */
+    height: 2.5vw;
+    min-width: 2.5rem;
+    min-height: 2.5rem;
+    background-color: transparent;
+}
+
+.colorPicker:hover{
+    transform: scale(1.05); /* Buton büyür */
+}
+
+
+.colorPicker:active {
+    transform: scale(0.95); /* Butona tıklanma efekti */
+}
+
+.colorPicker::-webkit-color-swatch {
+    border-radius: 50%;
+    border: 3px solid #000000;
+}
+.colorPicker::-moz-color-swatch {
+    border-radius: 50%;
+    border: 3px solid #000000;
+}
+
+.inputLayerName{
+    color: rgb(230, 230, 230);
+    margin-left: 10px;
+}
+
+.inputLayerName {
+    font-family: "Helvetica Neue",sans-serif;
+    font-weight: 500;
+    font-size:large;
+    color: #fff;
+    background-color: rgb(28,28,30);
+    box-shadow: 0 0 .5vw rgba(0,0,0,0.5), 0 0 0 .15vw transparent;
+    border-radius: 0.5vw;
+    border: none;
+    padding: 0.6vw;
+    max-width: 250px;
+    transition: .4s;
+    min-width: 5rem;
+    min-height: 2rem;
+}
+
+.inputLayerName:hover {
+    box-shadow: 0 0 0 .15vw rgba(135, 207, 235, 0.186);
+}
+
+.inputLayerName:focus {
+    box-shadow: 0 0 0 .15vw skyblue;
+}
+
+.layerList::-webkit-scrollbar {
+    width: 12px; 
+}
+
+.layerList::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.1); 
+    border-radius: 10px;
+}
+
+.layerList::-webkit-scrollbar-thumb {
+    background-color: rgba(32, 183, 189, 0.8); 
+    border-radius: 10px; 
+    border: 2px solid #fff; 
+}
+
+.layerList::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(32, 183, 189, 1); 
+}
+
+
+.layerList::-webkit-scrollbar-thumb:active {
+    background-color: rgba(32, 183, 189, 1); 
+}

@@ -1,0 +1,98 @@
+
+.selecter{
+    box-sizing: border-box; /* Margin ve border'ı içerik alanına dahil eder */
+    margin: 10px;
+    border: 5px solid rgba(146, 146, 146, 0.425);
+    background-color: rgba(146, 146, 146, 0.425);
+    border-radius: 10px;
+    display: flex; /* Flex ile alt öğeleri hizalayacağız */
+    flex-direction: column; /* Öğeleri dikey olarak hizalayalım */
+    justify-content: space-between; /* Dikeyde eşit boşluk bırakacak şekilde hizalar */
+    height: 40vh;
+}
+.selecter div{
+    
+    height: 10vh;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+}
+
+.selecter button {
+    border: 3px solid black;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px 10px;
+    background-color: #272626;
+    cursor: pointer;
+    font-size: larger;
+    color: rgb(255, 255, 255);
+    font-weight: bolder;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 10rem;
+    transition: background-color 0.3s, transform 0.2s ease; /* Geçiş efekti */
+    background-size:cover;
+    background-position:center ;
+    
+    
+    
+}
+
+
+
+#basemap1{
+    background-image: url('./basemap1.png');
+}
+
+#basemap2{
+    background-image: url('./basemap2.png');
+}
+
+#basemap3{
+    background-image: url('./basemap3.png');
+    backdrop-filter: blur(1px);
+}
+
+#basemap4{
+    background-image: url('./basemap4.png');
+}
+
+
+.selecter button:hover{
+    border: 2px solid #007bff;
+    box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
+    transform: scale(1.05);
+}
+
+.selecter button:active{
+    border: 2px solid #79a6d6;
+    box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
+    transform: scale(0.95);
+}
+label {
+    font-family: Arial, sans-serif;
+    width: 60%;
+    display: flex; /* Flexbox kullanımı */
+    justify-content: flex-start; /* Yatayda baştan hizala */
+    align-items: center; /* Dikeyde ortala */
+    text-align: left; /* Metni sola hizala */
+    padding-left: 10px; /* Metni kenardan biraz içeri al */
+    border-radius: 5px;
+    font-size: x-large;
+    color: white;
+    text-shadow: -1px -1px 0 black, /* Sol üst */
+                 1px -1px 0 black,  /* Sağ üst */
+                 -1px 1px 0 black,  /* Sol alt */
+                 1px 1px 0 black;   /* Sağ alt */
+}
+
+
+/* baseMapSelecter.css */
+.selecter button.selected {
+    border: 2px solid #007bff;
+    background-color: #e0f7fa;
+    box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
+}

@@ -1,0 +1,82 @@
+.mapComp {
+    width: 75%;
+    height: 100vh;
+    position: absolute; /* Konumu ekranın sağ tarafına yerleştirmek için */
+    top: 0;
+    right: 0;
+    display: inline-block;
+}
+
+#map {
+    width: 100%;
+    height: 100vh; /* Haritayı tam ekran yapar */
+    position: relative; /* Butonun konumunu ayarlamak için */
+}
+
+#None {
+    position: absolute; /* Butonu haritanın içinde konumlandırmak için */
+    top: 10px; /* Haritanın üst kenarından 10 piksel aşağı */
+    right: 10px; /* Haritanın sağ kenarından 10 piksel sola */
+    padding: 10px;
+    background-color: #272626;
+    color: white;
+    border: 3px solid black;
+    border-radius: 5px;
+    cursor: pointer;
+    z-index: 1000;
+    width: 40px;
+}
+
+#Polygon {
+    position: absolute; /* Butonu haritanın içinde konumlandırmak için */
+    top: 60px; /* Haritanın üst kenarından 60 piksel aşağı */
+    right: 10px; /* Haritanın sağ kenarından 10 piksel sola */
+    padding: 10px;
+    background-color: #272626;
+    color: white;
+    border: 3px solid black;
+    border-radius: 5px;
+    cursor: pointer;
+    z-index: 1000;
+    transition: background-color 0.3s, transform 0.2s ease; /* Geçiş efekti */
+    width: 40px;
+}
+
+#Circle {
+    position: absolute; /* Butonu haritanın içinde konumlandırmak için */
+    top: 110px; /* Haritanın üst kenarından 110 piksel aşağı */
+    right: 10px; /* Haritanın sağ kenarından 10 piksel sola */
+    padding: 10px;
+    background-color: #272626;
+    color: white;
+    border: 3px solid black;
+    border-radius: 5px;
+    cursor: pointer;
+    z-index: 1000;
+    transition: background-color 0.3s, transform 0.2s ease; /* Geçiş efekti */
+    width: 40px;
+}
+
+#Clear {
+    position: absolute; /* Butonu haritanın içinde konumlandırmak için */
+    top: 160px; /* Haritanın üst kenarından 110 piksel aşağı */
+    right: 10px; /* Haritanın sağ kenarından 10 piksel sola */
+    padding: 10px;
+    background-color: #272626;
+    color: white;
+    border: 3px solid black;
+    border-radius: 5px;
+    cursor: pointer;
+    z-index: 1000;
+    transition: background-color 0.3s, transform 0.2s ease; /* Geçiş efekti */
+    width: 40px;
+}
+
+#Clear:hover, #Circle:hover, #Polygon:hover, #None:hover {
+    border-color: rgb(128, 43, 207);
+    transform: scale(1.05);
+}
+#Clear:active, #Circle:active, #Polygon:active, #None:active {
+    border-color: rgb(167, 140, 192);
+    transform: scale(0.95);
+}

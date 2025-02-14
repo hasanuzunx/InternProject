@@ -1,15 +1,15 @@
-import pg from 'pg';
+import "reflect-metadata";
+import { DataSource } from "typeorm";
+import { User } from "../models/User";
 
-const con = new pg.Client({
+export const AppDataSource = new DataSource({
+  type: "postgres",
   host: "localhost",
-  user: "postgres",
   port: 5432,
+  username: "postgres",
   password: "314",
   database: "localstorage",
+  entities: [User],
+  synchronize: true,
 });
 
-con.connect()
-  .then(() => console.log("Connected to PostgreSQL"))
-  .catch((err) => console.error("Connection error", err));
-
-export default con;

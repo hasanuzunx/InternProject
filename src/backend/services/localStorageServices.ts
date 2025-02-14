@@ -1,70 +1,82 @@
-import con from "../config/db.js"
+import { AppDataSource } from "../config/db";
+import { User } from "../models/User";
 import { Request, Response } from "express";
 
-const patchByName = async (res: Response,id:number,name:string,value:string) : Promise<Response> =>{
-    try{
-        console.log(name)
-        console.log(value)
-        const string = "UPDATE localhost SET "+name+" = '"+value+"' WHERE id = " + id + " RETURNING *";
-        const updateResult = await con.query(string);
-        return res.status(200).json({ message: "Veri başariyla güncellendi.", data: updateResult});
+// Veritabanı bağlantısını başlat
+AppDataSource.initialize().catch((err) => {
+  console.error("Error during DataSource initialization:", err);
+});
+
+const patchByName = async (res: Response, id: number, name: string, value: string): Promise<Response> => {
+  try {
+    const userRepository = AppDataSource.getRepository(User);
+    
+    // Kullaniciyı bul
+    const user = await userRepository.findOneBy({ id });
+
+    if (!user) {
+      return res.status(404).json({ error: "Kullanici bulunamadi" });
     }
-    catch(err){
-        console.log(err);
-        return res.status(500).json({ error: "Sunucu hatasi." });
+
+    // Güncelleme işlemini yap
+    (user as any)[name] = value;
+    await userRepository.save(user);
+
+    return res.status(200).json({ message: "Veri başariyla güncellendi.", data: user });
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({ error: "Sunucu hatasi." });
+  }
+};
+
+const getByName = async (res: Response, id: number, name: string): Promise<Response> => {
+  try {
+    const userRepository = AppDataSource.getRepository(User);
+    
+    // Kullaniciyı ID ile bul
+    const user = await userRepository.findOneBy({ id });
+
+    if (!user) {
+      return res.status(404).json({ error: "Kayit bulunamadii." });
     }
-}
 
+    return res.status(200).json({ [name]: user[name] });
+  } catch (error) {
+    console.error("❌ Veri sorgulama hatasi:", error);
+    return res.status(500).json({ error: "Sunucu hatasi." });
+  }
+};
 
+const postNewUserData = async (id: number, res: Response): Promise<Response> => {
+  try {
+    const userRepository = AppDataSource.getRepository(User);
 
+    // Kullaniciyı kontrol et
+    const existingUser = await userRepository.findOneBy({ id });
 
-const getByName = async(res: Response,id:number,name:string) :Promise<Response>  => { 
-    try {
-        const string = "Select "+ name + " FROM localhost WHERE id = " + id;
-        const result = await con.query(string);
-
-        if (result.rows.length === 0) {
-            return res.status(404).json({ error: "Kayit bulunamadi." });
-        }
-
-        return res.status(200).json({ [name]: result.rows[0][name]});
-    } catch (error) {
-        console.error("❌ Veri sorgulama hatasi:", error);
-        return res.status(500).json({ error: "Sunucu hatasi." });
+    if (existingUser) {
+      return res.status(400).json({ message: "Kullanici zaten kayitli" });
     }
-}
 
+    // Yeni Kullanici ekle
+    const newUser = new User();
+    newUser.id = id;
+    newUser.selected_base_map = null;
+    newUser.layer_name = null;
+    newUser.layer_visibility = null;
+    newUser.map_layer_apis = [];
 
+    await userRepository.save(newUser);
 
-const postNewUserData = async(id:number,res:Response):Promise<Response> => {
-
-    try {
-        const user = await con.query("SELECT * FROM localhost WHERE id = $1", [id]);
-        console.log(user)
-        if(user.rows.length > 0){
-            return res.status(400).json({ message: "kullanici zaten kayitli"});
-        }
-        else{
-            const result = await con.query(
-            `
-            INSERT INTO localhost (id, selectedbasemap, layer_visibility, layer_name, map_layer_apis)
-            VALUES ($1, NULL, NULL, NULL, NULL)
-            RETURNING *;
-            `, 
-            [id]
-            );
-            return res.status(201).json({ message: "Veri başariyla eklendi.", data: result.rows[0] });
-        }
-
-        
-    } catch (error) {
-        console.error("❌ Veri ekleme hatasi:", error);
-        return res.status(500).json({ error: "Sunucu hatasi." });
-    }
-}
+    return res.status(201).json({ message: "Veri başariyla eklendi.", data: newUser });
+  } catch (error) {
+    console.error("❌ Veri ekleme hatasi:", error);
+    return res.status(500).json({ error: "Sunucu hatasi." });
+  }
+};
 
 export default {
-    patchByName,
-    getByName,
-    postNewUserData
-}
+  patchByName,
+  getByName,
+  postNewUserData,
+};

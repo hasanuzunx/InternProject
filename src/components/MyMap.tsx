@@ -38,19 +38,25 @@ import {Draw, Modify, Snap} from 'ol/interaction.js';
 
 function MyMap() {
 
-    const {setGlobalMap,globalMap, selectedBaseMap, setMapLayers, mapLayers,layerNumRef } = useContext(MapContext);
+    const context = useContext(MapContext);
+    if (!context) {
+    throw new Error("BaseMapSelecter must be used within a MapContext.Provider");
+    }
+    
+    const {setGlobalMap,globalMap, selectedBaseMap, setMapLayers, mapLayers,layerNumRef } = context;
+
 
     useGeographic();
-    const [locationInfo, setLocationInfo] = useState(null); 
-    const[map,setMap] = useState(null);
-    const[draw,setDraw] = useState(null);
-    const[snap,setSnap] = useState(null);
+    const [locationInfo, setLocationInfo] = useState<any>(null); 
+    const[map,setMap] = useState<any>(null);
+    const[draw,setDraw] = useState<any>(null);
+    const[snap,setSnap] = useState<any>(null);
     //const[shapeLayerList,setShapeLayerList] = useState([]);
-    const[baseMapLayers,setBaseMapLayers] = useState([]);
-    const[baseLayerGroup,setBaseLayerGroup] = useState(null);
-    const[usedButton,setUsedButton] = useState(1);
+    const[baseMapLayers,setBaseMapLayers] = useState<any[]>([]);
+    const[baseLayerGroup,setBaseLayerGroup] = useState<any>(null);
+    const[usedButton,setUsedButton] = useState<any>(1);
     
-    const[urls,setUrls] = useState(()=>{
+    const[urls,setUrls] = useState<any>(()=>{
         const xa =localStorage.getItem('mapLayerApis')
         if(xa){
             const parsedX = JSON.parse(xa);
@@ -136,7 +142,7 @@ function MyMap() {
         const baseMap1 = new TileLayer({
             source: new OSM(),
             visible: true,
-            title: "1"
+            //title: "1"
         });
 
         const baseMap2 = new TileLayer({
@@ -145,7 +151,7 @@ function MyMap() {
                 attributions: 'Map tiles by <a href="https://stamen.com/">Stamen Design</a>, under <a href="https://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>. Data by <a href="https://openstreetmap.org/">OpenStreetMap</a>, under <a href="https://www.openstreetmap.org/copyright">ODbL</a>.'
             }),
             visible: false,
-            title: "2"
+            //title: "2"
         });
 
 
@@ -155,7 +161,7 @@ function MyMap() {
                 attributions: 'Map tiles by <a href="https://stamen.com/">Stamen Design</a>, under <a href="https://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>. Data by <a href="https://openstreetmap.org/">OpenStreetMap</a>, under <a href="https://www.openstreetmap.org/copyright">ODbL</a>.'
             }),
             visible: false,
-            title: "3"
+            //title: "3"
         });
 
         const baseMap4 =new TileLayer({
@@ -164,7 +170,7 @@ function MyMap() {
                 attributions: 'Map tiles by <a href="https://stamen.com/">Stamen Design</a>, under <a href="https://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>. Data by <a href="https://openstreetmap.org/">OpenStreetMap</a>, under <a href="https://www.openstreetmap.org/copyright">ODbL</a>.'
                 
             }),
-            title: "4",
+            //title: "4",
             visible: false,
         });
         
@@ -270,7 +276,7 @@ function MyMap() {
         
 
         return () => {
-            mapInstance.setTarget(null); 
+            mapInstance.setTarget(undefined); 
         };
         
     }, []);
@@ -405,25 +411,32 @@ function MyMap() {
         }
     };
 
-    useEffect(()=>{
+    useEffect(() => {
         const PolygonButton = document.getElementById('Polygon');
         const CircleButton = document.getElementById('Circle');
         const NoneButton = document.getElementById('None');
-        PolygonButton.style.backgroundColor = '#272626';
-        CircleButton.style.backgroundColor = '#272626';
-        NoneButton.style.backgroundColor = '#272626';
-
-        if(usedButton===1){
-            NoneButton.style.backgroundColor = 'rgb(128, 43, 207)';
+      
+        // Her butonun null olup olmadığını kontrol et
+        if (PolygonButton) {
+          PolygonButton.style.backgroundColor = '#272626';
         }
-        else if(usedButton===2){
-            PolygonButton.style.backgroundColor = 'rgb(128, 43, 207)';
+        if (CircleButton) {
+          CircleButton.style.backgroundColor = '#272626';
         }
-        else if(usedButton===3){
-            CircleButton.style.backgroundColor = 'rgb(128, 43, 207)';
+        if (NoneButton) {
+          NoneButton.style.backgroundColor = '#272626';
         }
-
-    },[usedButton]);
+      
+        // Butonları seçilen duruma göre renklendir
+        if (usedButton === 1 && NoneButton) {
+          NoneButton.style.backgroundColor = 'rgb(128, 43, 207)';
+        } else if (usedButton === 2 && PolygonButton) {
+          PolygonButton.style.backgroundColor = 'rgb(128, 43, 207)';
+        } else if (usedButton === 3 && CircleButton) {
+          CircleButton.style.backgroundColor = 'rgb(128, 43, 207)';
+        }
+      }, [usedButton]);
+      
     
     return <div className='mapComp'>
             

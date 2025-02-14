@@ -1,4 +1,4 @@
-import MyMap from './components/MYMap'
+import MyMap from './components/MyMap.jsx'
 import './App.css'
 import React, { createContext, useState, useRef, useEffect } from 'react';
 import LeftBox from './components/LeftBox';
@@ -7,7 +7,18 @@ import { Vector as VectorSource} from 'ol/source';
 import GeoJSON from 'ol/format/GeoJSON';
 import { Circle as CircleStyle, Fill, Stroke, Style } from 'ol/style';
 
-export const MapContext = createContext();
+interface MapContextType {
+	globalMap: unknown[];
+	setGlobalMap: React.Dispatch<React.SetStateAction<unknown[]>>;
+	mapLayers: VectorLayer[];
+	setMapLayers: React.Dispatch<React.SetStateAction<VectorLayer[]>>;
+	selectedBaseMap: number;
+	setSelectedBaseMap: React.Dispatch<React.SetStateAction<number>>;
+	layerNumRef: React.MutableRefObject<number>;
+}
+
+
+export const MapContext = createContext<MapContextType>();
 
 function App() {
 
@@ -66,7 +77,7 @@ function App() {
 	return (
 		<MapContext.Provider value={{ globalMap,setGlobalMap, mapLayers, setMapLayers, selectedBaseMap, setSelectedBaseMap,layerNumRef }}>
 		<div>
-			<LeftBox className="leftBox" />
+			<LeftBox/>
 			<MyMap />
 		</div>
 		</MapContext.Provider>

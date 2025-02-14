@@ -5,12 +5,28 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
 import { Style,Fill,Stroke } from "ol/style";
 import { useEffect } from "react";
+import React from "react";
+import { Layer } from 'ol/layer'
+import VectorLayer from "ol/layer/Vector";
+
+
+interface LayerState {
+    [key: string]: boolean;  // Herhangi bir anahtar (string) ve onun değeri boolean olacak
+}
+  
+
 
 function LayerList() {
-    const { mapLayers, globalMap } = useContext(MapContext);
+    const context = useContext(MapContext);
+    if (!context) {
+    throw new Error("BaseMapSelecter must be used within a MapContext.Provider");
+    }
+
+    const { mapLayers, globalMap } = context;
+
     
     // Katman görünürlüğü için bir state
-    const [layerVisibility, setLayerVisibility] = useState(()=>{
+    const [layerVisibility, setLayerVisibility] = useState<Object>(()=>{
         const vis = localStorage.getItem('layerVisibility');
         if(vis){
             const parsedVis = JSON.parse(vis);
@@ -20,7 +36,7 @@ function LayerList() {
         return {};
     });
 
-    const [layerColor, setLayerColor] = useState(()=>{
+    const [layerColor, setLayerColor] = useState<Object>(()=>{
         const color = localStorage.getItem('layerColor');
         if(color){
             const parsedColor = JSON.parse(color);
@@ -32,7 +48,7 @@ function LayerList() {
 
     
 
-    const [layerName, setLayerName] = useState(()=>{
+    const [layerName, setLayerName] = useState<Object>(()=>{
         const names = localStorage.getItem('layerName');
         if(names){
             const parsedNames = JSON.parse(names);
@@ -44,9 +60,11 @@ function LayerList() {
 
 
 
+
+
     useEffect(() => {
-        const initialLayerNames = {};
-        mapLayers.forEach(layer => {
+        const initialLayerNames:object = {};
+        mapLayers.forEach( (layer :VectorLayer) => {
             const layerId = layer.get("id");
             initialLayerNames[layerId] = `Layer ${layerId}`;
             let bool=true;
@@ -54,7 +72,7 @@ function LayerList() {
             {
                 bool=false;
             }
-            let color='#8bac88';
+            let color :string='#8bac88';
             if(!layerColor[layer.get('id')]){
                 setLayerColor(prevState => ({
                     ...prevState,
@@ -65,7 +83,7 @@ function LayerList() {
                 color = layerColor[layer.get('id')]; // Yeni renk değeri
             }
 
-            const currentStyle = layer.getStyle();
+            const currentStyle: any = layer.getStyle();
             currentStyle.getFill().setColor(color);
             layer.setStyle(currentStyle); // Güncellenmiş stili katmana uygula
 
@@ -82,7 +100,7 @@ function LayerList() {
 
     useEffect(()=>{
         if(globalMap.length!==0){
-            mapLayers.forEach(layer => {
+            mapLayers.forEach((layer:Layer) => {
                 if(layerVisibility[layer.get('id')]===true)
                 {
                     globalMap.addLayer(layer);
@@ -107,7 +125,7 @@ function LayerList() {
 
 
 
-    const handleSeeButton = (layer) => {
+    const handleSeeButton = (layer :Layer) => {
         const layerId = layer.get('id');
         const layerExists = globalMap.getLayers().getArray().some(existingLayer => existingLayer.get('id') === layerId);
         
@@ -126,11 +144,11 @@ function LayerList() {
         }
     };
 
-    const handleColorChange = (event,layer) => {
+    const handleColorChange = (event:any,layer: VectorLayer) => {
         const layerId = layer.get('id');
 
         const color = event.target.value; // Yeni renk değeri
-        const currentStyle = layer.getStyle();
+        const currentStyle:any = layer.getStyle();
         currentStyle.getFill().setColor(color);
         layer.setStyle(currentStyle); // Güncellenmiş stili katmana uygula
         
@@ -153,7 +171,7 @@ function LayerList() {
     return (
         <div className="layerList" id="first">
             {
-                mapLayers.map((layer) => {
+                mapLayers.map((layer :any) => {
                     const isVisible = layerVisibility[layer.get('id')] !== false; // Katmanın görünürlük durumu
     
                    

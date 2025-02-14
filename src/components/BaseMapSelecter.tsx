@@ -1,9 +1,17 @@
 import "../baseMapSelecter.css";
 import { useContext } from "react";
 import { MapContext } from "../App";
+import React from "react";
+
 
 function BaseMapSelecter() {
-    const { selectedBaseMap, setSelectedBaseMap } = useContext(MapContext);
+    const context = useContext(MapContext);
+    if (!context) {
+    throw new Error("BaseMapSelecter must be used within a MapContext.Provider");
+    }
+
+    const { selectedBaseMap, setSelectedBaseMap } = context;
+
 
     return (
         <div className="selecter">

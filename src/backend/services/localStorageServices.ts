@@ -1,13 +1,13 @@
 import { AppDataSource } from "../config/db";
 import { User } from "../models/User";
-import { Request, Response } from "express";
+import { Response } from "express";
 
 // Veritabanı bağlantısını başlat
 AppDataSource.initialize().catch((err) => {
   console.error("Error during DataSource initialization:", err);
 });
 
-const patchByName = async (res: Response, id: number, name: string, value: string): Promise<Response> => {
+export const patchByName = async (res: Response, id: number, name: string, value: any): Promise<Response> => {
   try {
     const userRepository = AppDataSource.getRepository(User);
     
@@ -17,19 +17,38 @@ const patchByName = async (res: Response, id: number, name: string, value: strin
     if (!user) {
       return res.status(404).json({ error: "Kullanici bulunamadi" });
     }
+    
+    //console.log("Value type:", typeof value, "Value:", value);
 
-    // Güncelleme işlemini yap
-    (user as any)[name] = value;
+    // Type kontrolü
+    if (typeof value === "string") {
+      (user as any)[name] = value;
+    } else if (typeof value === "number") {
+      (user as any)[name] = Number(value); // Integer olmalıysa sayıya çevir
+    } else if (Array.isArray(value)) {
+      if (value.every(item => typeof item === "string")) {
+        (user as any)[name] = value; // String array ise direkt ata
+      } else {
+        return res.status(400).json({ error: "Geçersiz array formatı" });
+      }
+    } else {
+      return res.status(400).json({ error: "Geçersiz veri türü" });
+    }
+
     await userRepository.save(user);
 
     return res.status(200).json({ message: "Veri başariyla güncellendi.", data: user });
   } catch (err) {
+    console.log(name);
+    console.log(value)
     console.log(err);
     return res.status(500).json({ error: "Sunucu hatasi." });
   }
 };
 
-const getByName = async (res: Response, id: number, name: string): Promise<Response> => {
+
+
+export const getByName = async (res: Response, id: number, name: string): Promise<Response> => {
   try {
     const userRepository = AppDataSource.getRepository(User);
     
@@ -47,7 +66,7 @@ const getByName = async (res: Response, id: number, name: string): Promise<Respo
   }
 };
 
-const postNewUserData = async (id: number, res: Response): Promise<Response> => {
+export const postNewUserData = async (id: number, res: Response): Promise<Response> => {
   try {
     const userRepository = AppDataSource.getRepository(User);
 
@@ -75,8 +94,3 @@ const postNewUserData = async (id: number, res: Response): Promise<Response> => 
   }
 };
 
-export default {
-  patchByName,
-  getByName,
-  postNewUserData,
-};

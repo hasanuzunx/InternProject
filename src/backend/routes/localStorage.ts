@@ -1,21 +1,31 @@
 import express, { Router } from 'express';
-import controllerLocalStorage from '../controllers/localStorage'; // Import path'lerini kontrol et
+import {
+  getLayerVisibility,
+  getLayerName,
+  getSelectedBaseMap,
+  getMapLayerApis,
+  postNewUser,
+  patchMapLayerApis,
+  patchSelectedBaseMap,
+  patchLayerName,
+  patchLayerVisibility
+} from '../controllers/localStorage'; 
 
 const router: Router = express.Router();
 
-// GET istekleri
-router.get('/layer_visibility', controllerLocalStorage.getLayerVisibility);
-router.get('/layer_name', controllerLocalStorage.getLayerName);
-router.get('/selectedbasemap', controllerLocalStorage.getSelectedBaseMap);
-router.get('/map_layer_apis', controllerLocalStorage.getMapLayerApis);
+// 🟢 GET İstekleri
+router.get('/layer_visibility', getLayerVisibility);
+router.get('/layer_name', getLayerName);
+router.get('/selected_base_map', getSelectedBaseMap);
+router.get('/map_layer_apis', getMapLayerApis);
 
-// POST isteği
-router.post('/', controllerLocalStorage.postNewUser);
+// 🔵 POST İsteği
+router.post('/', postNewUser);
 
-// PATCH istekleri
-router.patch('/map_layer_apis', controllerLocalStorage.patchMapLayerApis);
-router.patch('/selectedbasemap', controllerLocalStorage.patchSelectedBaseMap);
-router.patch('/layer_name', controllerLocalStorage.patchLayerName);
-router.patch('/layer_visibility', controllerLocalStorage.patchLayerVisibility);
+// 🟠 PATCH İstekleri
+router.patch('/map_layer_apis', patchMapLayerApis);
+router.patch('/selected_base_map', patchSelectedBaseMap);
+router.patch('/layer_name', patchLayerName);
+router.patch('/layer_visibility', patchLayerVisibility);
 
 export default router;

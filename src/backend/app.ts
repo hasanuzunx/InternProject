@@ -1,13 +1,19 @@
 import express from "express";
 import localStorageRouter from "./routes/localStorage";
 import { AppDataSource } from "./config/db";
-import "reflect-metadata";
+import cors from "cors";
 
 const app = express(); 
 
+app.use(cors({
+  origin: "http://localhost:5173", // Sadece frontend'e izin ver
+  methods: ["GET", "POST", "PUT", "DELETE","PATCH"],
+  allowedHeaders: ["Content-Type"]
+}))
+
 app.use(express.json());
 
-app.use("/api/localStorage", localStorageRouter);
+app.use("/api/local_storage", localStorageRouter);
 
 AppDataSource.initialize()
   .then(() => console.log("Database connected!"))

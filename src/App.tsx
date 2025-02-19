@@ -8,17 +8,17 @@ import GeoJSON from 'ol/format/GeoJSON';
 import { Circle as CircleStyle, Fill, Stroke, Style } from 'ol/style';
 
 interface MapContextType {
-	globalMap: unknown[];
-	setGlobalMap: React.Dispatch<React.SetStateAction<unknown[]>>;
-	mapLayers: VectorLayer[];
-	setMapLayers: React.Dispatch<React.SetStateAction<VectorLayer[]>>;
+	globalMap: any;
+	setGlobalMap: any;
+	mapLayers: any;
+	setMapLayers: any;
 	selectedBaseMap: number;
-	setSelectedBaseMap: React.Dispatch<React.SetStateAction<number>>;
-	layerNumRef: React.MutableRefObject<number>;
+	setSelectedBaseMap: any;
+	layerNumRef: any;
 }
 
 
-export const MapContext = createContext<MapContextType>();
+export const MapContext = createContext<MapContextType | undefined>(undefined);
 
 function App() {
 

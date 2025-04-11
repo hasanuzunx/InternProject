@@ -26,24 +26,26 @@ import { faCoffee,faCircle,faDrawPolygon,faBroom,faArrowPointer } from '@fortawe
 import '../myMap.css';
 
 
+import { ethers } from "ethers";
 
 
 
 import {Draw, Modify, Snap} from 'ol/interaction.js';
 
 
-
-
-
+import { useSyncProviders } from "../hooks/useSyncProviders"
+import { EIP6963ProviderDetail } from 'web3';
 
 function MyMap() {
 
+    
+    
     const context = useContext(MapContext);
     if (!context) {
     throw new Error("BaseMapSelecter must be used within a MapContext.Provider");
     }
     
-    const {setGlobalMap,globalMap, selectedBaseMap, setMapLayers, mapLayers,layerNumRef } = context;
+    const {setGlobalMap,globalMap, selectedBaseMap,setSelectedBaseMap, setMapLayers, mapLayers,layerNumRef } = context;
 
 
     useGeographic();
@@ -71,7 +73,24 @@ function MyMap() {
     });
     */
 
+    const getSelectedBaseMap = async () =>{
+        const requestOptions:RequestInit = {
+        method: "GET",
+        redirect: "follow"
+        };
+
+        const response = await fetch(`http://localhost:3000/api/local_storage/selected_base_map?id=8`, requestOptions);
+        if (!response.ok) {
+            throw new Error("Veri çekilirken hata oluştu");
+        }
+
+        const result = await response.json(); // JSON olarak yanıtı al
+        console.log(result); // Burada response veri yapısını kontrol edebilirsiniz
+        return result; // Sonucu döndürüyoruz
+    }
+
     useEffect(()=>{
+
         if(urls){
             localStorage.setItem('mapLayerApis', JSON.stringify(urls));
         }
@@ -113,6 +132,7 @@ function MyMap() {
     });
 
     useEffect(()=>{
+        
         if(baseLayerGroup){
             const layersArray = baseLayerGroup.getLayers().getArray();
 
@@ -138,6 +158,13 @@ function MyMap() {
 
     useEffect(() => {
 
+        const fetchSelectedBaseMap = async () => {
+            const selected:any = await getSelectedBaseMap(); // Katman URL'lerini al
+            setSelectedBaseMap(selected.selected_base_map);
+            console.log("selected"+selected.selected_base_map)
+        };
+    
+        fetchSelectedBaseMap(); // Tanımladığın fonksiyonu çağır
 
         const baseMap1 = new TileLayer({
             source: new OSM(),
@@ -336,7 +363,7 @@ function MyMap() {
 
 
     const fetchShapesInArea = (geometry) => {
-        let wfsUrlSelectedShapes;
+        let wfsUrlSelectedShapes:any;
 
         if (geometry.getType() === 'Circle') {
             const center = geometry.getCenter(); 

@@ -17,6 +17,7 @@ interface MapContextType {
 	selectedBaseMap: number;
 	setSelectedBaseMap: any;
 	layerNumRef: any;
+<<<<<<< HEAD
 	walletAddress: any;
 	isConnected: any;
 	setWalletAddress: any;
@@ -25,6 +26,11 @@ interface MapContextType {
 
 import { useSyncProviders } from "./hooks/useSyncProviders"
 import { EIP6963ProviderDetail } from 'web3';
+=======
+}
+
+
+>>>>>>> 10b5e915fed64ff4f3140d0fc378549b4e759e7d
 export const MapContext = createContext<MapContextType | undefined>(undefined);
 
 function App() {

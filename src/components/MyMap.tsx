@@ -23,7 +23,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCoffee,faCircle,faDrawPolygon,faBroom,faArrowPointer } from '@fortawesome/free-solid-svg-icons'
 
 
-import '../myMap.css';
+import './styles/myMap.css';
 
 
 import { ethers } from "ethers";

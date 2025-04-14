@@ -44,20 +44,20 @@
 
 
 #basemap1{
-    background-image: url('./basemap1.png');
+    background-image: url('../../images/basemap1.png');
 }
 
 #basemap2{
-    background-image: url('./basemap2.png');
+    background-image: url('../../images/basemap2.png');
 }
 
 #basemap3{
-    background-image: url('./basemap3.png');
+    background-image: url('../../images/basemap3.png');
     backdrop-filter: blur(1px);
 }
 
 #basemap4{
-    background-image: url('./basemap4.png');
+    background-image: url('../../images/basemap4.png');
 }
 
 

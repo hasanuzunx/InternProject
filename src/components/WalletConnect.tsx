@@ -3,7 +3,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { MapContext } from "../App";
 import { useSyncProviders } from "../hooks/useSyncProviders";
 import Web3, { EIP6963ProviderDetail } from "web3";
-import '../WalletConnect.css'; // 👈 CSS dosyasını içe aktar
+import './styles/WalletConnect.css'; // 👈 CSS dosyasını içe aktar
 
 import WalletConnectProvider from "@walletconnect/web3-provider";
 

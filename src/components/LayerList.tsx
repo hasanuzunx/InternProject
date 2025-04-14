@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import { MapContext } from "../App";
-import '../layerList.css';
+import './styles/layerList.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
 import { Style,Fill,Stroke } from "ol/style";

@@ -1,4 +1,4 @@
-import "../baseMapSelecter.css";
+import "./styles/baseMapSelecter.css";
 import { useContext } from "react";
 import { MapContext } from "../App";
 import React from "react";

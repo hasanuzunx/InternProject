@@ -1,5 +1,5 @@
 import BaseMapSelecter from "./BaseMapSelecter";
-import '../leftBox.css';
+import './styles/leftBox.css';
 import LayerList from "./LayerList";
 import React from "react";
 

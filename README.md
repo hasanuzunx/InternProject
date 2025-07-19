@@ -1,8 +1,27 @@
-# React + Vite
+# Land Parcel Visualization Web Application
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is a full-stack web application that visualizes land parcel data on an interactive map using modern geospatial technologies. Developed during my internship at Proven Technologies.
 
-Currently, two official plugins are available:
+## 🔍 Project Overview
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+The project aimed to build a prototype system that displays parcel information on a dynamic map interface, with data sourced from geospatial platforms. Additionally, a conceptual smart contract structure was explored to simulate land transaction logic.
+
+## 🗺️ Features
+
+- Visualize parcel data using **OpenLayers** on an interactive React-based map
+- Read spatial data from **GeoServer** and **QGIS**
+- Developed a full-featured **React.js** frontend
+- Built a **Node.js + Express** backend for data serving and API communication
+- Explored basic blockchain integration concepts with **Solidity** (not included in this repo)
+
+## 🛠️ Technologies Used
+
+- React.js
+- OpenLayers
+- Node.js & Express
+- GeoServer
+- QGIS
+- Git
+
+## 📷 Screenshots
+<img width="1154" height="566" alt="image" src="https://github.com/user-attachments/assets/aa548823-44ab-4894-9286-d8d8bac9ca76" />
